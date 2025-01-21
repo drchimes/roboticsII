@@ -4,22 +4,26 @@ Using Serial Monitor to Control Servo Motor (11/14/2018). Kub_Luk
 <https://projecthub.arduino.cc/Kub_Luk/using-serial-monitor-to-control-servo-motor-c55083>
 Accessed on 11/17/2024
 */
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-#include <Servo.h>
 Servo myservo;
 int pos = 160;
 
 
 
-void   setup(){
-Serial.begin(9600);
-while (!Serial);
-Serial.println("-------------------------");
-Serial.println("ARos   is loading....");
-delay(1000);
-Serial.println("ARos loaded succesfully");
-Serial.println("-------------------------");
-myservo.attach(9);
+void setup(){
+  pwm.begin();
+  Serial.begin(9600);
+  
+  while (!Serial);
+  Serial.println("-------------------------");
+  Serial.println("ARos   is loading....");
+  delay(1000);
+  Serial.println("ARos loaded successfully");
+  Serial.println("-------------------------");
+
 Serial.println("calibrating   servo...");
 for(pos = 1600; pos <= 600; pos += 1)
 pwm.setPWM(0,0,160);//myservo.write(0);
