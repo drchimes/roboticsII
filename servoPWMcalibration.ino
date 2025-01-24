@@ -8,15 +8,34 @@ Accessed on 11/17/2024
 #include <Adafruit_PWMServoDriver.h>
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-Servo myservo;
-int pos = 160;
-
-
+#define SERVO_FREQ 50
+/////Update these values as needed to control a motor and its position
+int servonum = 0;
+int posValue = 160;
 
 void setup(){
-  pwm.begin();
   Serial.begin(9600);
-  
+  pwm.begin();
+  pwm.setOscillatorFrequency(27000000);
+  pwm.setPWMFreq(SERVO_FREQ);
+}
+void loop(){
+  pwm.setPWM(servonum, 0, posValue);
+  message();
+}
+
+void message(){
+  Serial.print("Servo ");
+  Serial.print(servonum);
+  Serial.print(" is at ");
+  Serial.println(posValue);
+  delay(500);
+}
+
+
+
+////////////////////Ignore this code//////////////////////////
+/*
   while (!Serial);
   Serial.println("-------------------------");
   Serial.println("ARos   is loading....");
@@ -59,7 +78,7 @@ if (Serial.available()){
   }
 }
 }
-
+*/
 
 
   
